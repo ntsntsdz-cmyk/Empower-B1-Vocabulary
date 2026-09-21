@@ -47,7 +47,7 @@
             font-size: 16px;
             transition: all 0.2s ease;
         }
-        /* Active lessons (Blue/Purple style from your image) */
+        /* Active status for completed/working lessons */
         .lesson-card.active {
             border: 2px solid #5d5fef;
             color: #5d5fef;
@@ -56,12 +56,12 @@
         .lesson-card.active:hover {
             background-color: #f0f1ff;
         }
-        /* Locked lessons (Greyed out style from your image) */
+        /* Locked status for files you haven't created yet */
         .lesson-card.locked {
             background-color: #f3f3f6;
             color: #d1d1d6;
             border: 2px solid transparent;
-            pointer-events: none; /* Disables clicking */
+            pointer-events: none;
         }
     </style>
 </head>
@@ -75,10 +75,10 @@
         <div class="unit-container">
             <div class="unit-title">Unit 1</div>
             <div class="lesson-grid">
-                <a href="unit-1/1A/" class="lesson-card active">1A</a>
-                <a href="unit-1/1B/" class="lesson-card active">1B</a>
-                <a href="unit-1/1C/" class="lesson-card active">1C</a>
-                <a href="unit-1/1D/" class="lesson-card locked">1D</a>
+                <a href="1A.html" class="lesson-card active">1A</a>
+                <a href="1B.html" class="lesson-card active">1B</a>
+                <a href="1C.html" class="lesson-card active">1C</a>
+                <a href="1D.html" class="lesson-card locked">1D</a>
             </div>
         </div>
 
@@ -86,10 +86,10 @@
         <div class="unit-container">
             <div class="unit-title">Unit 2</div>
             <div class="lesson-grid">
-                <a href="unit-2/2A/" class="lesson-card locked">2A</a>
-                <a href="unit-2/2B/" class="lesson-card locked">2B</a>
-                <a href="unit-2/2C/" class="lesson-card locked">2C</a>
-                <a href="unit-2/2D/" class="lesson-card locked">2D</a>
+                <a href="2A.html" class="lesson-card locked">2A</a>
+                <a href="2B.html" class="lesson-card locked">2B</a>
+                <a href="2C.html" class="lesson-card locked">2C</a>
+                <a href="2D.html" class="lesson-card locked">2D</a>
             </div>
         </div>
 
@@ -97,10 +97,10 @@
         <div class="unit-container">
             <div class="unit-title">Unit 3</div>
             <div class="lesson-grid">
-                <a href="unit-3/3A/" class="lesson-card locked">3A</a>
-                <a href="unit-3/3B/" class="lesson-card locked">3B</a>
-                <a href="unit-3/3C/" class="lesson-card locked">3C</a>
-                <a href="unit-3/3D/" class="lesson-card locked">3D</a>
+                <a href="3A.html" class="lesson-card locked">3A</a>
+                <a href="3B.html" class="lesson-card locked">3B</a>
+                <a href="3C.html" class="lesson-card locked">3C</a>
+                <a href="3D.html" class="lesson-card locked">3D</a>
             </div>
         </div>
 
@@ -108,10 +108,10 @@
         <div class="unit-container">
             <div class="unit-title">Unit 4</div>
             <div class="lesson-grid">
-                <a href="unit-4/4A/" class="lesson-card locked">4A</a>
-                <a href="unit-4/4B/" class="lesson-card locked">4B</a>
-                <a href="unit-4/4C/" class="lesson-card locked">4C</a>
-                <a href="unit-4/4D/" class="lesson-card locked">4D</a>
+                <a href="4A.html" class="lesson-card locked">4A</a>
+                <a href="4B.html" class="lesson-card locked">4B</a>
+                <a href="4C.html" class="lesson-card locked">4C</a>
+                <a href="4D.html" class="lesson-card locked">4D</a>
             </div>
         </div>
 
@@ -119,10 +119,10 @@
         <div class="unit-container">
             <div class="unit-title">Unit 5</div>
             <div class="lesson-grid">
-                <a href="unit-5/5A/" class="lesson-card locked">5A</a>
-                <a href="unit-5/5B/" class="lesson-card locked">5B</a>
-                <a href="unit-5/5C/" class="lesson-card locked">5C</a>
-                <a href="unit-5/5D/" class="lesson-card locked">5D</a>
+                <a href="5A.html" class="lesson-card locked">5A</a>
+                <a href="5B.html" class="lesson-card locked">5B</a>
+                <a href="5C.html" class="lesson-card locked">5C</a>
+                <a href="5D.html" class="lesson-card locked">5D</a>
             </div>
         </div>
 
@@ -130,10 +130,10 @@
         <div class="unit-container">
             <div class="unit-title">Unit 6</div>
             <div class="lesson-grid">
-                <a href="unit-6/6A/" class="lesson-card locked">6A</a>
-                <a href="unit-6/6B/" class="lesson-card locked">6B</a>
-                <a href="unit-6/6C/" class="lesson-card locked">6C</a>
-                <a href="unit-6/6D/" class="lesson-card locked">6D</a>
+                <a href="6A.html" class="lesson-card locked">6A</a>
+                <a href="6B.html" class="lesson-card locked">6B</a>
+                <a href="6C.html" class="lesson-card locked">6C</a>
+                <a href="6D.html" class="lesson-card locked">6D</a>
             </div>
         </div>
 
@@ -141,10 +141,10 @@
         <div class="unit-container">
             <div class="unit-title">Unit 7</div>
             <div class="lesson-grid">
-                <a href="unit-7/7A/" class="lesson-card locked">7A</a>
-                <a href="unit-7/7B/" class="lesson-card locked">7B</a>
-                <a href="unit-7/7C/" class="lesson-card locked">7C</a>
-                <a href="unit-7/7D/" class="lesson-card locked">7D</a>
+                <a href="7A.html" class="lesson-card locked">7A</a>
+                <a href="7B.html" class="lesson-card locked">7B</a>
+                <a href="7C.html" class="lesson-card locked">7C</a>
+                <a href="7D.html" class="lesson-card locked">7D</a>
             </div>
         </div>
 
@@ -152,10 +152,10 @@
         <div class="unit-container">
             <div class="unit-title">Unit 8</div>
             <div class="lesson-grid">
-                <a href="unit-8/8A/" class="lesson-card locked">8A</a>
-                <a href="unit-8/8B/" class="lesson-card locked">8B</a>
-                <a href="unit-8/8C/" class="lesson-card locked">8C</a>
-                <a href="unit-8/8D/" class="lesson-card locked">8D</a>
+                <a href="8A.html" class="lesson-card locked">8A</a>
+                <a href="8B.html" class="lesson-card locked">8B</a>
+                <a href="8C.html" class="lesson-card locked">8C</a>
+                <a href="8D.html" class="lesson-card locked">8D</a>
             </div>
         </div>
 
@@ -163,10 +163,10 @@
         <div class="unit-container">
             <div class="unit-title">Unit 9</div>
             <div class="lesson-grid">
-                <a href="unit-9/9A/" class="lesson-card locked">9A</a>
-                <a href="unit-9/9B/" class="lesson-card locked">9B</a>
-                <a href="unit-9/9C/" class="lesson-card locked">9C</a>
-                <a href="unit-9/9D/" class="lesson-card locked">9D</a>
+                <a href="9A.html" class="lesson-card locked">9A</a>
+                <a href="9B.html" class="lesson-card locked">9B</a>
+                <a href="9C.html" class="lesson-card locked">9C</a>
+                <a href="9D.html" class="lesson-card locked">9D</a>
             </div>
         </div>
 
@@ -174,10 +174,10 @@
         <div class="unit-container">
             <div class="unit-title">Unit 10</div>
             <div class="lesson-grid">
-                <a href="unit-10/10A/" class="lesson-card locked">10A</a>
-                <a href="unit-10/10B/" class="lesson-card locked">10B</a>
-                <a href="unit-10/10C/" class="lesson-card locked">10C</a>
-                <a href="unit-10/10D/" class="lesson-card locked">10D</a>
+                <a href="10A.html" class="lesson-card locked">10A</a>
+                <a href="10B.html" class="lesson-card locked">10B</a>
+                <a href="10C.html" class="lesson-card locked">10C</a>
+                <a href="10D.html" class="lesson-card locked">10D</a>
             </div>
         </div>
 
@@ -185,10 +185,10 @@
         <div class="unit-container">
             <div class="unit-title">Unit 11</div>
             <div class="lesson-grid">
-                <a href="unit-11/11A/" class="lesson-card locked">11A</a>
-                <a href="unit-11/11B/" class="lesson-card locked">11B</a>
-                <a href="unit-11/11C/" class="lesson-card locked">11C</a>
-                <a href="unit-11/11D/" class="lesson-card locked">11D</a>
+                <a href="11A.html" class="lesson-card locked">11A</a>
+                <a href="11B.html" class="lesson-card locked">11B</a>
+                <a href="11C.html" class="lesson-card locked">11C</a>
+                <a href="11D.html" class="lesson-card locked">11D</a>
             </div>
         </div>
 
@@ -196,10 +196,10 @@
         <div class="unit-container">
             <div class="unit-title">Unit 12</div>
             <div class="lesson-grid">
-                <a href="unit-12/12A/" class="lesson-card locked">12A</a>
-                <a href="unit-12/12B/" class="lesson-card locked">12B</a>
-                <a href="unit-12/12C/" class="lesson-card locked">12C</a>
-                <a href="unit-12/12D/" class="lesson-card locked">12D</a>
+                <a href="12A.html" class="lesson-card locked">12A</a>
+                <a href="12B.html" class="lesson-card locked">12B</a>
+                <a href="12C.html" class="lesson-card locked">12C</a>
+                <a href="12D.html" class="lesson-card locked">12D</a>
             </div>
         </div>
 
