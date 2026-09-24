@@ -1,0 +1,1997 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#0ea5e9">
+<title>Empower B1 · Lesson 1B</title>
+<style>
+:root {
+  --sky: #0ea5e9;
+  --indigo: #6366f1;
+  --primary: #0ea5e9;
+  --primary-soft: #e0f2fe;
+  --bg: #f0f9ff;
+  --surface: #ffffff;
+  --border: #e0f2fe;
+  --text: #0f172a;
+  --muted: #64748b;
+  --success: #10b981;
+  --success-soft: #d1fae5;
+  --warn: #f59e0b;
+  --warn-soft: #fef3c7;
+  --danger: #ef4444;
+  --danger-soft: #fee2e2;
+  --shadow: 0 1px 3px rgba(14,165,233,0.08), 0 4px 14px rgba(99,102,241,0.06);
+  --radius: 14px;
+  --touch: 44px;
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html, body {
+  height: 100%;
+  background: var(--bg);
+  color: var(--text);
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+body { display: flex; flex-direction: column; min-height: 100dvh; }
+button, input, textarea, select {
+  font: inherit; color: inherit; border: none; background: none; outline: none;
+}
+button { cursor: pointer; }
+input, textarea { font-size: 16px !important; }
+
+#app {
+  display: flex; flex-direction: column;
+  max-width: 480px; margin: 0 auto; width: 100%;
+  min-height: 100dvh; background: var(--bg);
+  position: relative;
+}
+
+/* Header */
+#header {
+  background: linear-gradient(135deg, #0ea5e9, #6366f1);
+  color: #fff;
+  padding: 12px 16px 14px;
+  padding-top: calc(12px + var(--safe-top));
+  text-align: center;
+  flex-shrink: 0;
+  position: sticky; top: 0; z-index: 20;
+  box-shadow: 0 2px 12px rgba(14,165,233,0.25);
+}
+.brand-title { font-size: 1.15rem; font-weight: 700; letter-spacing: -0.02em; }
+.brand-sub { opacity: 0.9; font-size: 0.75rem; margin-top: 2px; }
+
+/* Main scroll */
+#main {
+  flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch;
+  padding: 10px 12px calc(16px + var(--safe-bottom));
+}
+
+/* Stats */
+.stats-row {
+  display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-bottom: 10px;
+}
+.stat-card {
+  background: var(--surface); border: 1px solid var(--border); border-radius: 12px;
+  padding: 10px 6px; text-align: center; box-shadow: var(--shadow);
+}
+.stat-card .num { font-size: 1.15rem; font-weight: 700; color: var(--indigo); }
+.stat-card .lbl { font-size: 0.68rem; color: var(--muted); margin-top: 1px; }
+
+/* Due bar */
+.due-btn {
+  display: flex; align-items: center; gap: 10px; width: 100%;
+  padding: 11px 14px; margin-bottom: 12px;
+  background: var(--surface); border: 1.5px solid var(--border);
+  border-radius: 12px; box-shadow: var(--shadow); text-align: left;
+  font-size: 0.85rem; min-height: var(--touch);
+}
+.due-btn.has-due { background: #fffbeb; border-color: #fbbf24; }
+.due-btn .due-label { font-weight: 700; white-space: nowrap; }
+.due-btn.has-due .due-label { color: #b45309; }
+.due-btn .due-detail { flex: 1; color: var(--muted); font-size: 0.78rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.due-btn .chev { color: var(--muted); font-weight: 700; }
+
+/* Section labels */
+.sec-label {
+  font-size: 0.72rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.05em; color: var(--muted); margin: 4px 0 8px;
+}
+
+/* Practice grid */
+.prac-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 14px;
+}
+.prac-btn {
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 4px; padding: 12px 4px; min-height: 72px;
+  background: var(--surface); border: 1.5px solid var(--border);
+  border-radius: 12px; box-shadow: var(--shadow); font-size: 0.72rem; font-weight: 600;
+}
+.prac-btn:active { transform: scale(0.97); background: var(--primary-soft); }
+.prac-btn .ico { font-size: 1.35rem; line-height: 1; }
+
+/* Use it row */
+.use-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 14px; }
+.use-btn {
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  padding: 12px; min-height: var(--touch);
+  background: linear-gradient(135deg, #0ea5e9, #6366f1); color: #fff;
+  border-radius: 12px; font-weight: 600; font-size: 0.88rem;
+  box-shadow: 0 2px 10px rgba(14,165,233,0.3);
+}
+.use-btn:active { transform: scale(0.98); }
+
+/* Words toolbar */
+.words-bar {
+  display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 8px;
+}
+.words-bar .sec-label { margin: 0; }
+.bar-actions { display: flex; gap: 6px; }
+.btn-sm {
+  display: inline-flex; align-items: center; justify-content: center; gap: 4px;
+  min-height: 36px; padding: 0 12px; border-radius: 10px;
+  font-size: 0.78rem; font-weight: 600;
+  background: var(--surface); border: 1.5px solid var(--border); box-shadow: var(--shadow);
+}
+.btn-sm.primary {
+  background: linear-gradient(135deg, #0ea5e9, #6366f1); color: #fff; border-color: transparent;
+}
+
+/* Word grid */
+.word-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px;
+}
+@media (min-width: 400px) { .word-grid { grid-template-columns: repeat(4, 1fr); } }
+.word-card {
+  background: var(--surface); border: 1.5px solid var(--border); border-radius: 12px;
+  padding: 12px 6px; min-height: 84px;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 4px; text-align: center; box-shadow: var(--shadow); position: relative;
+}
+.word-card:active { transform: scale(0.97); }
+.word-card.learned { border-color: #6ee7b7; background: #ecfdf5; }
+.word-card.hard { border-color: #fbbf24; background: #fffbeb; }
+.word-card .emoji { font-size: 1.45rem; line-height: 1.2; }
+.word-card .term {
+  font-size: 0.68rem; font-weight: 650; line-height: 1.2; word-break: break-word;
+}
+.word-card .badge {
+  position: absolute; top: 4px; right: 5px; font-size: 0.65rem;
+}
+
+/* Buttons */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+  min-height: var(--touch); padding: 0 14px; border-radius: 10px;
+  font-size: 0.88rem; font-weight: 600;
+  background: var(--surface); border: 1.5px solid var(--border); box-shadow: var(--shadow);
+}
+.btn:active { transform: scale(0.98); }
+.btn-primary {
+  background: linear-gradient(135deg, #0ea5e9, #6366f1); color: #fff; border-color: transparent;
+}
+.btn-success { background: var(--success); color: #fff; border-color: var(--success); }
+.btn-warn { background: var(--warn); color: #fff; border-color: var(--warn); }
+.btn-hard { background: #ef4444; color: #fff; border-color: #ef4444; }
+.btn-medium { background: #f59e0b; color: #1e293b; border-color: #f59e0b; }
+.btn-easy { background: #10b981; color: #fff; border-color: #10b981; }
+.btn-block { width: 100%; }
+.btn-ghost { background: transparent; box-shadow: none; border-color: transparent; color: var(--muted); }
+
+/* Study panel */
+#studyPanel { display: none; }
+#studyPanel.active { display: block; }
+#homeView.hidden { display: none; }
+
+.study-back {
+  display: inline-flex; align-items: center; gap: 4px;
+  min-height: 40px; padding: 0 4px; font-weight: 700; font-size: 0.95rem;
+  color: var(--indigo); margin-bottom: 8px;
+}
+.study-term {
+  font-size: 1.35rem; font-weight: 700; color: var(--indigo);
+  letter-spacing: -0.02em; line-height: 1.25; margin-top: 4px;
+}
+.study-phonetic { color: var(--muted); font-size: 0.85rem; font-style: italic; margin: 2px 0 8px; }
+.study-emoji { font-size: 2.4rem; text-align: center; margin: 4px 0; }
+.study-visual img {
+  max-width: 100%; max-height: 140px; border-radius: 12px; object-fit: cover; display: block; margin: 0 auto;
+}
+.img-tools { display: flex; flex-wrap: wrap; gap: 6px; margin: 6px 0 10px; justify-content: center; }
+.img-tools .btn { min-height: 36px; font-size: 0.75rem; padding: 0 10px; }
+
+.def-box {
+  background: #f0f9ff; border-left: 3px solid var(--sky); border-radius: 0 12px 12px 0;
+  padding: 12px; font-size: 0.92rem; line-height: 1.45; margin-bottom: 8px;
+}
+.ex-box {
+  background: var(--success-soft); border-left: 3px solid var(--success); border-radius: 0 12px 12px 0;
+  padding: 10px 12px; font-size: 0.85rem; font-style: italic; color: #065f46; line-height: 1.4; margin-bottom: 10px;
+}
+.study-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+
+/* Tabs */
+.tabs {
+  display: flex; gap: 4px; overflow-x: auto; scrollbar-width: none;
+  padding-bottom: 4px; border-bottom: 2px solid var(--border); margin-bottom: 10px;
+}
+.tabs::-webkit-scrollbar { display: none; }
+.tab {
+  flex-shrink: 0; padding: 9px 12px; font-size: 0.8rem; font-weight: 600;
+  border-radius: 8px; color: var(--muted); min-height: 40px;
+}
+.tab.active { background: linear-gradient(135deg, #0ea5e9, #6366f1); color: #fff; }
+.tab-pane { display: none; }
+.tab-pane.active { display: block; }
+
+.prompt-box {
+  background: #f0f9ff; border: 1px solid var(--border); border-radius: 12px;
+  padding: 12px; font-size: 0.88rem; line-height: 1.4; margin-bottom: 10px;
+}
+.mc-options { display: flex; flex-direction: column; gap: 8px; }
+.mc-opt {
+  text-align: left; padding: 13px 14px; background: #f8fafc;
+  border: 1.5px solid var(--border); border-radius: 12px;
+  font-size: 0.88rem; line-height: 1.35; min-height: var(--touch);
+}
+.mc-opt:active { border-color: var(--sky); background: var(--primary-soft); }
+.mc-opt.correct { border-color: var(--success); background: var(--success-soft); }
+.mc-opt.wrong { border-color: var(--danger); background: var(--danger-soft); }
+
+.spell-input, .sentence-input {
+  width: 100%; padding: 12px 14px; background: var(--surface);
+  border: 1.5px solid var(--border); border-radius: 12px; margin-bottom: 10px; color: var(--text);
+}
+.spell-input:focus, .sentence-input:focus {
+  border-color: var(--sky); box-shadow: 0 0 0 3px rgba(14,165,233,0.15);
+}
+.sentence-input { min-height: 88px; resize: vertical; }
+
+.feedback {
+  margin-top: 10px; padding: 11px; border-radius: 12px; font-size: 0.88rem;
+  display: none; font-weight: 500;
+}
+.feedback.show { display: block; }
+.feedback.ok { background: var(--success-soft); color: #065f46; border: 1px solid #a7f3d0; }
+.feedback.bad { background: var(--danger-soft); color: #991b1b; border: 1px solid #fecaca; }
+
+.rec-status { font-size: 0.82rem; color: var(--muted); margin: 8px 0; min-height: 20px; }
+.rec-status.listening { color: var(--sky); font-weight: 600; }
+.rec-status.error { color: var(--danger); }
+
+/* YouGlish */
+#youglishBox {
+  margin-top: 8px; border-radius: 12px; overflow: hidden; background: #0f172a;
+  display: none; border: 1px solid var(--border);
+}
+#youglishBox.visible { display: block; }
+#youglishFrame { width: 100%; height: 220px; border: 0; background: #0f172a; }
+
+/* Modal / bottom sheet */
+#modal {
+  position: fixed; inset: 0; z-index: 80; display: none;
+  align-items: flex-end; justify-content: center;
+  background: rgba(15,23,42,0.45);
+}
+#modal.open { display: flex; }
+.modal-sheet {
+  width: 100%; max-width: 480px; max-height: 90dvh;
+  background: var(--surface); border-radius: 20px 20px 0 0;
+  padding: 10px 14px calc(16px + var(--safe-bottom));
+  overflow-y: auto; animation: sheetUp 0.28s ease;
+  box-shadow: 0 -8px 30px rgba(0,0,0,0.12); position: relative;
+}
+@keyframes sheetUp {
+  from { transform: translateY(40%); opacity: 0.6; }
+  to { transform: translateY(0); opacity: 1; }
+}
+.modal-handle {
+  width: 40px; height: 4px; background: #cbd5e1; border-radius: 2px; margin: 0 auto 12px;
+}
+.modal-title { font-size: 1.1rem; font-weight: 700; margin-bottom: 10px; }
+.modal-close {
+  position: absolute; top: 12px; right: 12px; width: 36px; height: 36px;
+  font-size: 1.25rem; display: flex; align-items: center; justify-content: center;
+  border-radius: 8px; color: var(--muted);
+}
+
+/* Match */
+.match-board { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.match-tile {
+  padding: 11px 8px; background: #f8fafc; border: 1.5px solid var(--border);
+  border-radius: 11px; font-size: 0.8rem; line-height: 1.3; min-height: 64px;
+  text-align: center; display: flex; align-items: center; justify-content: center;
+  box-shadow: var(--shadow);
+}
+.match-tile.selected { border-color: var(--sky); background: var(--primary-soft); box-shadow: 0 0 0 2px rgba(14,165,233,0.25); }
+.match-tile.matched { opacity: 0.4; pointer-events: none; border-color: var(--success); background: var(--success-soft); }
+.match-tile.wrong { border-color: var(--danger); background: var(--danger-soft); }
+
+/* Order chips */
+.order-bank, .order-built {
+  display: flex; flex-wrap: wrap; gap: 8px; min-height: 48px; padding: 10px;
+  border-radius: 12px; border: 1.5px dashed var(--border); background: #f8fafc; margin-bottom: 10px;
+}
+.order-built { border-style: solid; background: var(--primary-soft); border-color: #bae6fd; min-height: 56px; }
+.order-chip {
+  padding: 10px 12px; background: var(--surface); border: 1.5px solid var(--border);
+  border-radius: 10px; font-size: 0.88rem; font-weight: 600; box-shadow: var(--shadow); min-height: 40px;
+}
+.order-chip:active { transform: scale(0.96); }
+.order-chip.used { opacity: 0.35; pointer-events: none; }
+.order-chip.in-built { background: linear-gradient(135deg, #0ea5e9, #6366f1); color: #fff; border-color: transparent; }
+
+/* Hangman */
+.hm-word {
+  display: flex; flex-wrap: wrap; gap: 4px; justify-content: center;
+  font-size: 1.25rem; font-weight: 700; letter-spacing: 0.08em; margin: 12px 0; min-height: 36px;
+}
+.hm-letter {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-width: 1.1em; border-bottom: 2px solid var(--indigo); padding: 0 2px;
+}
+.hm-letter.space { border-bottom: none; min-width: 0.5em; }
+.hm-keys {
+  display: flex; flex-wrap: wrap; gap: 5px; justify-content: center; margin-top: 10px;
+}
+.hm-key {
+  width: 32px; height: 40px; border-radius: 8px; font-weight: 700; font-size: 0.85rem;
+  background: var(--surface); border: 1.5px solid var(--border); box-shadow: var(--shadow);
+}
+.hm-key:active { transform: scale(0.94); }
+.hm-key.used { opacity: 0.35; pointer-events: none; }
+.hm-key.bad { background: var(--danger-soft); border-color: #fca5a5; }
+.hm-key.good { background: var(--success-soft); border-color: #6ee7b7; }
+.hm-status { text-align: center; font-size: 0.88rem; color: var(--muted); margin: 6px 0; }
+
+/* Gap */
+.gap-sentence {
+  font-size: 0.95rem; line-height: 1.55; padding: 12px; background: #f0f9ff;
+  border-radius: 12px; border: 1px solid var(--border); margin-bottom: 10px;
+}
+.gap-blank {
+  display: inline-block; min-width: 4em; border-bottom: 2px solid var(--sky);
+  margin: 0 2px; color: var(--sky); font-weight: 700; text-align: center;
+}
+
+/* SRS grades */
+.srs-grades { display: flex; gap: 8px; margin-top: 14px; }
+.srs-grades .btn { flex: 1; }
+
+.score-bar {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 8px 0; font-size: 0.85rem; color: var(--muted);
+}
+.score-bar strong { color: var(--text); }
+
+/* Forms */
+.add-form label {
+  display: block; font-size: 0.72rem; font-weight: 600; color: var(--muted); margin: 8px 0 3px;
+}
+.add-form input, .add-form textarea {
+  width: 100%; padding: 10px 12px; border: 1.5px solid var(--border);
+  border-radius: 10px; background: var(--surface);
+}
+.add-form input:focus, .add-form textarea:focus {
+  border-color: var(--sky); box-shadow: 0 0 0 3px rgba(14,165,233,0.12);
+}
+.add-form textarea { min-height: 60px; resize: vertical; }
+.add-form .err { color: var(--danger); font-size: 0.82rem; margin-top: 6px; display: none; }
+.add-form .err.show { display: block; }
+
+.empty-state { text-align: center; padding: 28px 16px; color: var(--muted); font-size: 0.92rem; }
+.note-text { font-size: 0.75rem; color: var(--muted); margin-top: 6px; line-height: 1.35; }
+.hidden { display: none !important; }
+.prac-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px; }
+</style>
+</head>
+<body>
+<div id="app">
+  <header id="header">
+    <div class="brand-title">Empower B1 · Lesson 1B</div>
+    <div class="brand-sub">Contact &amp; communication phrases</div>
+  </header>
+
+  <main id="main">
+    <!-- HOME -->
+    <div id="homeView">
+      <div class="stats-row">
+        <div class="stat-card"><div class="num" id="statLearned">0/0</div><div class="lbl">Learned</div></div>
+        <div class="stat-card"><div class="num" id="statStreak">0</div><div class="lbl">Streak</div></div>
+        <div class="stat-card"><div class="num" id="statPoints">0</div><div class="lbl">Points</div></div>
+      </div>
+
+      <button type="button" class="due-btn none-due" id="dueBtn">
+        <span class="due-label">Due for review</span>
+        <span class="due-detail" id="dueDetail">Nothing due</span>
+        <span class="chev">›</span>
+      </button>
+
+      <div class="sec-label">Practice</div>
+      <div class="prac-grid">
+        <button type="button" class="prac-btn" data-mode="match"><span class="ico">🔗</span>Match</button>
+        <button type="button" class="prac-btn" data-mode="gaps"><span class="ico">📝</span>Gaps</button>
+        <button type="button" class="prac-btn" data-mode="order"><span class="ico">🔀</span>Order</button>
+        <button type="button" class="prac-btn" data-mode="quiz"><span class="ico">❓</span>Quiz</button>
+        <button type="button" class="prac-btn" data-mode="hangman"><span class="ico">🎯</span>Hangman</button>
+        <button type="button" class="prac-btn" data-mode="review"><span class="ico">📅</span>Review</button>
+      </div>
+
+      <div class="sec-label">Use it</div>
+      <div class="use-row">
+        <button type="button" class="use-btn" data-mode="write">✍️ Write</button>
+        <button type="button" class="use-btn" data-mode="speak">🎙️ Speak</button>
+      </div>
+
+      <div class="words-bar">
+        <div class="sec-label">Words</div>
+        <div class="bar-actions">
+          <button type="button" class="btn-sm" id="btnProgress">📊</button>
+          <button type="button" class="btn-sm primary" id="btnAddWord">+ Add word</button>
+        </div>
+      </div>
+      <div id="wordGrid" class="word-grid"></div>
+    </div>
+
+    <!-- STUDY PANEL -->
+    <div id="studyPanel">
+      <button type="button" class="study-back" id="btnBack">← Back</button>
+      <div class="study-emoji" id="studyEmoji"></div>
+      <div class="study-visual" id="studyVisual"></div>
+      <div class="study-term" id="studyTerm"></div>
+      <div class="study-phonetic" id="studyPhonetic"></div>
+      <div class="img-tools">
+        <button type="button" class="btn btn-sm" id="btnImgUpload">📷 Upload</button>
+        <button type="button" class="btn btn-sm" id="btnImgSearch">🔎 Find</button>
+        <button type="button" class="btn btn-sm" id="btnImgPaste">🔗 URL</button>
+        <button type="button" class="btn btn-sm" id="btnImgRemove">✕ Remove</button>
+        <input type="file" id="imgFileInput" accept="image/*" style="display:none">
+      </div>
+      <div class="def-box" id="studyDef"></div>
+      <div class="ex-box" id="studyEx"></div>
+      <div class="study-actions">
+        <button type="button" class="btn btn-primary" id="btnHear">🔊 Hear</button>
+        <button type="button" class="btn" id="btnYouglish">YouGlish</button>
+        <button type="button" class="btn btn-success" id="btnLearned">✓ Learned</button>
+        <button type="button" class="btn btn-warn" id="btnHard">🔥 Hard</button>
+      </div>
+      <div id="youglishBox">
+        <div id="yg-loading" style="display:none;padding:20px;text-align:center;color:#94a3b8;background:#0f172a;">
+          <div style="font-size:24px;margin-bottom:6px;">🎬</div>
+          <div id="yg-loading-text">Loading examples…</div>
+        </div>
+        <div id="yg-widget" style="width:100%;min-height:220px;background:#0f172a;"></div>
+        <iframe id="youglishFrame" allow="autoplay" loading="lazy" style="display:none;"></iframe>
+        <div style="padding:8px;text-align:center;background:#0f172a;">
+          <button type="button" class="btn btn-sm" id="btnYgReload" style="color:#e2e8f0;border-color:#334155;">Reload clips</button>
+        </div>
+      </div>
+      <div class="tabs" id="studyTabs">
+        <button type="button" class="tab active" data-tab="mc">Meaning</button>
+        <button type="button" class="tab" data-tab="spell">Spelling</button>
+        <button type="button" class="tab" data-tab="sent">Sentence</button>
+      </div>
+      <div id="pane-mc" class="tab-pane active">
+        <div id="mcPrompt" class="prompt-box"></div>
+        <div class="mc-options" id="mcOptions"></div>
+        <div class="feedback" id="mcFeedback"></div>
+      </div>
+      <div id="pane-spell" class="tab-pane">
+        <div class="prompt-box">Type the phrase from the definition below.</div>
+        <div class="prompt-box" id="spellDefBox" style="font-weight:600;"></div>
+        <input class="spell-input" id="spellInput" placeholder="Type the phrase…" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+        <div class="prac-actions">
+          <button type="button" class="btn btn-sm" id="btnSpellHint">Hint</button>
+          <button type="button" class="btn btn-sm" id="btnSpellHear">🔊</button>
+          <button type="button" class="btn btn-primary btn-sm" id="btnSpellCheck">Check</button>
+        </div>
+        <div class="feedback" id="spellFeedback"></div>
+      </div>
+      <div id="pane-sent" class="tab-pane">
+        <div class="prompt-box" id="sentPrompt"></div>
+        <textarea class="sentence-input" id="sentInput" placeholder="Write a sentence using the phrase…"></textarea>
+        <button type="button" class="btn btn-primary btn-block" id="btnSentCheck">Check phrase used</button>
+        <div class="feedback" id="sentFeedback"></div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Modal -->
+  <div id="modal">
+    <div class="modal-sheet" id="modalSheet">
+      <div class="modal-handle"></div>
+      <button type="button" class="modal-close" id="modalCloseBtn" aria-label="Close">×</button>
+      <div id="modalBody"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ============================================================
+   Empower B1 · Lesson 1B — Contact & communication phrases
+   ============================================================ */
+const STORAGE_KEY = 'empower_b1_1B_v1';
+const CUSTOM_KEY = STORAGE_KEY + '_custom';
+const IMAGE_KEY = STORAGE_KEY + '_images';
+
+const builtInWords = [
+  {
+    term: "plans",
+    phonetic: "/plænz/",
+    definition: "to change your mind and say you cannot meet someone",
+    example: "Sorry, I have to cancel our plans for tomorrow.",
+    emoji: "📅",
+    image: "",
+    imgQuery: "cancel plans meeting"
+  },
+  {
+    term: "keep in touch with",
+    phonetic: "/kiːp ɪn tʌtʃ wɪð/",
+    definition: "to talk or write to someone regularly",
+    example: "We still keep in touch with our old school friends.",
+    emoji: "📱",
+    image: "",
+    imgQuery: "keep in touch friends"
+  },
+  {
+    term: "engage with",
+    phonetic: "/ɪnˈɡeɪdʒ wɪð/",
+    definition: "to talk to someone and pay attention to them",
+    example: "Teachers should engage with every student in the class.",
+    emoji: "👀",
+    image: "",
+    imgQuery: "engage conversation attention"
+  },
+  {
+    term: "in person",
+    phonetic: "/ɪn ˈpɜːsən/",
+    definition: "meeting face-to-face in real life, not on a computer or phone",
+    example: "I'd rather discuss this in person than by email.",
+    emoji: "🤝",
+    image: "",
+    imgQuery: "face to face meeting"
+  },
+  {
+    term: "through",
+    phonetic: "/θruː/",
+    definition: "by using something (like a phone, app, or a friend)",
+    example: "I heard the news through a friend.",
+    emoji: "📲",
+    image: "",
+    imgQuery: "communicate through phone"
+  },
+  {
+    term: "mainly",
+    phonetic: "/ˈmeɪnli/",
+    definition: "mostly or usually",
+    example: "We mainly talk online these days.",
+    emoji: "📊",
+    image: "",
+    imgQuery: "mainly mostly"
+  },
+  {
+    term: "rarely",
+    phonetic: "/ˈreəli/",
+    definition: "not often",
+    example: "She rarely answers the phone after 9 pm.",
+    emoji: "🌙",
+    image: "",
+    imgQuery: "rarely not often"
+  },
+  {
+    term: "hardly ever",
+    phonetic: "/ˈhɑːdli ˈevə/",
+    definition: "almost never",
+    example: "He hardly ever checks his emails at the weekend.",
+    emoji: "🚫",
+    image: "",
+    imgQuery: "hardly ever almost never"
+  },
+  {
+    term: "absolutely",
+    phonetic: "/ˈæbsəluːtli/",
+    definition: "100% or completely",
+    example: "I absolutely agree with you.",
+    emoji: "💯",
+    image: "",
+    imgQuery: "absolutely completely agree"
+  },
+  {
+    term: "especially",
+    phonetic: "/ɪˈspeʃəli/",
+    definition: "more than other things",
+    example: "I love weekends, especially Sunday mornings.",
+    emoji: "⭐",
+    image: "",
+    imgQuery: "especially more than"
+  },
+  {
+    term: "pretty",
+    phonetic: "/ˈprɪti/",
+    definition: "quite (a little bit less than \"very\")",
+    example: "The film was pretty good, but not amazing.",
+    emoji: "👍",
+    image: "",
+    imgQuery: "pretty quite fairly"
+  }
+];
+
+let words = [];
+let imageMap = {};
+let currentWord = null;
+let recognition = null;
+let recogActive = false;
+
+let state = {
+  learned: {},
+  hard: {},
+  srs: {},
+  points: 0,
+  streak: 0,
+  lastStudyDate: null,
+  dailyDone: 0,
+  dailyDate: null
+};
+
+/* ---------- Utils ---------- */
+function $(id) { return document.getElementById(id); }
+function qs(sel, el) { return (el || document).querySelector(sel); }
+function qsa(sel, el) { return Array.from((el || document).querySelectorAll(sel)); }
+function escapeHtml(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+function todayStr() {
+  const d = new Date();
+  return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
+}
+function shuffle(arr) {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+function termKey(w) { return (w && w.term) ? w.term : ''; }
+function isLearned(w) { return !!state.learned[termKey(w)]; }
+function isHard(w) { return !!state.hard[termKey(w)]; }
+
+function phraseUsed(text, phrase) {
+  const norm = s => s.toLowerCase().replace(/[^\w\s']/g, ' ').replace(/\s+/g, ' ').trim();
+  const t = norm(text);
+  const p = norm(phrase);
+  if (!p) return false;
+  const re = new RegExp('(?:^|\\s)' + p.replace(/[.*+?^${}()|[\]\\]/g, '\\$&').replace(/\s+/g, '\\s+') + '(?:\\s|$)', 'i');
+  return re.test(t);
+}
+
+function levenshtein(a, b) {
+  a = (a || '').toLowerCase(); b = (b || '').toLowerCase();
+  const m = a.length, n = b.length;
+  const dp = Array.from({ length: m + 1 }, () => Array(n + 1).fill(0));
+  for (let i = 0; i <= m; i++) dp[i][0] = i;
+  for (let j = 0; j <= n; j++) dp[0][j] = j;
+  for (let i = 1; i <= m; i++) {
+    for (let j = 1; j <= n; j++) {
+      dp[i][j] = a[i-1] === b[j-1] ? dp[i-1][j-1] : 1 + Math.min(dp[i-1][j], dp[i][j-1], dp[i-1][j-1]);
+    }
+  }
+  return dp[m][n];
+}
+
+function tokenizeSentence(s) {
+  return (s || '').replace(/[""]/g, '"').replace(/['']/g, "'").trim().split(/\s+/).filter(Boolean);
+}
+
+function blankExample(example, term) {
+  if (!example) return 'Use the phrase: ________';
+  const re = new RegExp(term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'i');
+  if (re.test(example)) return example.replace(re, '________');
+  return example + ' → ________';
+}
+
+/* ---------- Storage ---------- */
+function saveState() {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify({
+      learned: state.learned,
+      hard: state.hard,
+      srs: state.srs,
+      points: state.points,
+      streak: state.streak,
+      lastStudyDate: state.lastStudyDate,
+      dailyDone: state.dailyDone,
+      dailyDate: state.dailyDate
+    }));
+  } catch (e) { console.warn('saveState', e); }
+}
+
+function loadState() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return;
+    const data = JSON.parse(raw);
+    Object.assign(state, {
+      learned: data.learned || {},
+      hard: data.hard || {},
+      srs: data.srs || {},
+      points: data.points || 0,
+      streak: data.streak || 0,
+      lastStudyDate: data.lastStudyDate || null,
+      dailyDone: data.dailyDone || 0,
+      dailyDate: data.dailyDate || null
+    });
+    if (state.dailyDate !== todayStr()) {
+      state.dailyDone = 0;
+      state.dailyDate = todayStr();
+    }
+  } catch (e) { console.warn('loadState', e); }
+}
+
+function loadWords() {
+  try {
+    const raw = localStorage.getItem(CUSTOM_KEY);
+    const custom = raw ? JSON.parse(raw) : [];
+    const imgRaw = localStorage.getItem(IMAGE_KEY);
+    imageMap = imgRaw ? JSON.parse(imgRaw) : {};
+    words = builtInWords.map(w => Object.assign({}, w));
+    if (Array.isArray(custom)) {
+      custom.forEach(c => {
+        if (!c || !c.term) return;
+        if (!words.some(w => w.term === c.term)) {
+          words.push(Object.assign({
+            phonetic: '', definition: '', example: '', emoji: '📝', image: '', imgQuery: '', custom: true
+          }, c, { custom: true }));
+        }
+      });
+    }
+    words.forEach(w => {
+      if (imageMap[w.term]) w.image = imageMap[w.term];
+    });
+  } catch (e) {
+    console.warn('loadWords', e);
+    words = builtInWords.map(w => Object.assign({}, w));
+  }
+  if (!words.length) words = builtInWords.map(w => Object.assign({}, w));
+}
+
+function saveCustom() {
+  try {
+    const custom = words.filter(w => w.custom);
+    localStorage.setItem(CUSTOM_KEY, JSON.stringify(custom));
+  } catch (e) { console.warn('saveCustom', e); }
+}
+
+function saveImages() {
+  try {
+    localStorage.setItem(IMAGE_KEY, JSON.stringify(imageMap));
+  } catch (e) {
+    console.warn('saveImages', e);
+    alert('Could not save image (storage full?). Try a smaller picture.');
+  }
+}
+
+function setWordImage(w, dataUrlOrUrl) {
+  if (!w) return;
+  if (dataUrlOrUrl) {
+    imageMap[w.term] = dataUrlOrUrl;
+    w.image = dataUrlOrUrl;
+  } else {
+    delete imageMap[w.term];
+    const built = builtInWords.find(b => b.term === w.term);
+    w.image = (built && built.image) || '';
+  }
+  saveImages();
+  refreshVisual();
+}
+
+/* ---------- Stats / SRS ---------- */
+function ensureSRS(w) {
+  const k = termKey(w);
+  if (!state.srs[k]) state.srs[k] = { ease: 2.5, interval: 0, repetitions: 0, nextReview: 0 };
+  return state.srs[k];
+}
+
+function getDueWords() {
+  const now = Date.now();
+  return words.filter(w => {
+    const s = ensureSRS(w);
+    return s.nextReview && s.nextReview <= now;
+  });
+}
+
+function gradeSRS(w, grade) {
+  const s = ensureSRS(w);
+  const now = Date.now();
+  if (grade === 0) {
+    s.repetitions = 0;
+    s.interval = 0.01;
+    s.ease = Math.max(1.3, s.ease - 0.2);
+    state.hard[termKey(w)] = true;
+  } else if (grade === 1) {
+    s.repetitions += 1;
+    s.interval = s.interval < 1 ? 1 : s.interval * 1.5;
+    s.ease = Math.max(1.3, s.ease - 0.05);
+  } else {
+    s.repetitions += 1;
+    if (s.repetitions === 1) s.interval = 1;
+    else if (s.repetitions === 2) s.interval = 3;
+    else s.interval = Math.round(s.interval * s.ease);
+    s.ease = Math.min(3.0, s.ease + 0.1);
+    state.learned[termKey(w)] = true;
+  }
+  s.nextReview = now + s.interval * 24 * 60 * 60 * 1000;
+  saveState();
+  updateStats();
+}
+
+function bumpDaily() {
+  if (state.dailyDate !== todayStr()) {
+    state.dailyDone = 0;
+    state.dailyDate = todayStr();
+  }
+  state.dailyDone++;
+  const today = todayStr();
+  if (state.lastStudyDate !== today) {
+    const yesterday = new Date();
+    yesterday.setDate(yesterday.getDate() - 1);
+    const yStr = yesterday.getFullYear() + '-' + String(yesterday.getMonth()+1).padStart(2,'0') + '-' + String(yesterday.getDate()).padStart(2,'0');
+    if (state.lastStudyDate === yStr) state.streak++;
+    else if (state.lastStudyDate !== today) state.streak = 1;
+    state.lastStudyDate = today;
+  }
+  saveState();
+  updateStats();
+}
+
+function addPoints(n) {
+  state.points += n;
+  saveState();
+  updateStats();
+}
+
+function updateStats() {
+  const total = words.length;
+  const learnedN = words.filter(isLearned).length;
+  const elL = $('statLearned');
+  if (elL) elL.textContent = learnedN + '/' + total;
+  const elS = $('statStreak');
+  if (elS) elS.textContent = state.streak;
+  const elP = $('statPoints');
+  if (elP) elP.textContent = state.points;
+  updateDue();
+}
+
+function updateDue() {
+  const btn = $('dueBtn');
+  const detail = $('dueDetail');
+  if (!btn || !detail) return;
+  const due = getDueWords();
+  if (due.length > 0) {
+    btn.classList.add('has-due');
+    btn.classList.remove('none-due');
+    const names = due.slice(0, 2).map(w => w.term).join(', ');
+    const more = due.length > 2 ? ' +' + (due.length - 2) : '';
+    detail.textContent = due.length + ': ' + names + more;
+  } else {
+    btn.classList.remove('has-due');
+    btn.classList.add('none-due');
+    detail.textContent = 'Nothing due — keep practising';
+  }
+}
+
+/* ---------- TTS / Speech ---------- */
+function speak(text) {
+  if (!window.speechSynthesis) return;
+  window.speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = 'en-GB';
+  u.rate = 0.92;
+  window.speechSynthesis.speak(u);
+}
+
+function startListen(onResult, onError, statusEl) {
+  if (recogActive) {
+    try { if (recognition) recognition.abort(); } catch (e) {}
+    recogActive = false;
+  }
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if (!SR) {
+    if (statusEl) {
+      statusEl.textContent = 'Speech needs Chrome or Edge on this device.';
+      statusEl.className = 'rec-status error';
+    }
+    if (onError) onError('unsupported');
+    return;
+  }
+  let r;
+  try { r = new SR(); } catch (e) {
+    if (statusEl) { statusEl.textContent = 'Could not start speech engine.'; statusEl.className = 'rec-status error'; }
+    if (onError) onError('init');
+    return;
+  }
+  recognition = r;
+  recogActive = true;
+  r.lang = 'en-GB';
+  r.interimResults = true;
+  r.maxAlternatives = 5;
+  r.continuous = false;
+  let finalHeard = '';
+  let settled = false;
+  const settle = (text) => {
+    if (settled) return;
+    settled = true;
+    recogActive = false;
+    try { r.stop(); } catch (e) {}
+    if (statusEl) {
+      statusEl.textContent = text ? ('Heard: "' + text + '"') : 'No speech heard';
+      statusEl.className = 'rec-status';
+    }
+    if (onResult) onResult(text || '');
+  };
+  if (statusEl) {
+    statusEl.textContent = 'Listening… speak now';
+    statusEl.className = 'rec-status listening';
+  }
+  r.onresult = (ev) => {
+    let interim = '';
+    for (let i = ev.resultIndex; i < ev.results.length; i++) {
+      const t = ev.results[i][0].transcript;
+      if (ev.results[i].isFinal) finalHeard += t + ' ';
+      else interim += t;
+    }
+    finalHeard = finalHeard.trim();
+    const show = (finalHeard || interim).trim();
+    if (statusEl && show) {
+      statusEl.textContent = 'Hearing: "' + show + '"';
+      statusEl.className = 'rec-status listening';
+    }
+    if (finalHeard) settle(finalHeard);
+  };
+  r.onerror = (ev) => {
+    if (ev.error === 'aborted') return;
+    recogActive = false;
+    settled = true;
+    let msg = 'Error: ' + (ev.error || 'unknown');
+    if (ev.error === 'not-allowed') msg = 'Mic blocked. Allow microphone in browser settings.';
+    else if (ev.error === 'no-speech') msg = 'No speech detected. Try again.';
+    else if (ev.error === 'network') msg = 'Network error — speech needs a connection.';
+    if (statusEl) { statusEl.textContent = msg; statusEl.className = 'rec-status error'; }
+    if (onError) onError(ev.error);
+  };
+  r.onend = () => {
+    if (!settled) {
+      if (finalHeard) settle(finalHeard);
+      else {
+        recogActive = false;
+        if (statusEl && statusEl.classList.contains('listening')) {
+          statusEl.textContent = 'Listening ended. Tap and speak again.';
+          statusEl.className = 'rec-status';
+        }
+      }
+    }
+  };
+  try { r.start(); } catch (e) {
+    recogActive = false;
+    if (statusEl) {
+      statusEl.textContent = 'Could not start mic. Close other tabs using the mic and try again.';
+      statusEl.className = 'rec-status error';
+    }
+  }
+  setTimeout(() => { try { if (recogActive) r.stop(); } catch (e) {} }, 8000);
+}
+
+/* ---------- YouGlish ---------- */
+let ygWidget = null;
+let ygReady = false;
+let ygPending = null;
+
+function loadYouGlish(term) {
+  if (!term) return;
+  const box = $('youglishBox');
+  const loading = $('yg-loading');
+  const loadingText = $('yg-loading-text');
+  const frame = $('youglishFrame');
+  if (!box) return;
+  box.classList.add('visible');
+  if (loading) {
+    loading.style.display = 'block';
+    if (loadingText) loadingText.textContent = 'Loading examples of "' + term + '"…';
+  }
+  if (frame) { frame.style.display = 'none'; frame.src = ''; }
+  if (ygReady && window.YG && ygWidget) {
+    try { ygWidget.fetch(term, 'english'); return; } catch (e) { console.warn(e); }
+  }
+  if (window.YG && !ygWidget) {
+    try {
+      ygWidget = new YG.Widget('yg-widget', {
+        width: 480, components: 255,
+        events: {
+          onFetchDone: function () { if (loading) loading.style.display = 'none'; },
+          onError: function () { fallbackYouGlish(term); }
+        }
+      });
+      ygReady = true;
+      ygWidget.fetch(term, 'english');
+      return;
+    } catch (e) { console.warn(e); }
+  }
+  ygPending = term;
+  fallbackYouGlish(term);
+}
+
+function fallbackYouGlish(term) {
+  const loading = $('yg-loading');
+  const frame = $('youglishFrame');
+  if (loading) loading.style.display = 'none';
+  if (frame) {
+    frame.style.display = 'block';
+    frame.src = 'https://youglish.com/pronounce/' + encodeURIComponent(term) + '/english';
+  }
+}
+
+function hideYouGlish() {
+  const box = $('youglishBox');
+  const frame = $('youglishFrame');
+  const loading = $('yg-loading');
+  if (box) box.classList.remove('visible');
+  if (frame) { frame.src = ''; frame.style.display = 'none'; }
+  if (loading) loading.style.display = 'none';
+}
+
+window.onYouglishAPIReady = function () {
+  ygReady = true;
+  try {
+    ygWidget = new YG.Widget('yg-widget', {
+      width: 480, components: 255,
+      events: {
+        onFetchDone: function () {
+          const loading = $('yg-loading');
+          if (loading) loading.style.display = 'none';
+        }
+      }
+    });
+    if (ygPending) {
+      ygWidget.fetch(ygPending, 'english');
+      ygPending = null;
+    }
+  } catch (e) { console.warn('YG init', e); }
+};
+
+/* ---------- UI: grid / study ---------- */
+function renderGrid() {
+  const grid = $('wordGrid');
+  if (!grid) return;
+  grid.innerHTML = '';
+  if (!words.length) {
+    grid.innerHTML = '<div class="empty-state" style="grid-column:1/-1">No words loaded.</div>';
+    return;
+  }
+  words.forEach(w => {
+    const card = document.createElement('button');
+    card.type = 'button';
+    card.className = 'word-card';
+    if (isLearned(w)) card.classList.add('learned');
+    if (isHard(w)) card.classList.add('hard');
+    const badges = [];
+    if (isLearned(w)) badges.push('✓');
+    if (isHard(w)) badges.push('🔥');
+    card.innerHTML =
+      '<div class="emoji">' + (w.emoji || '📝') + '</div>' +
+      '<div class="term">' + escapeHtml(w.term) + '</div>' +
+      (badges.length ? '<div class="badge">' + badges.join(' ') + '</div>' : '');
+    card.addEventListener('click', () => openStudy(w));
+    grid.appendChild(card);
+  });
+}
+
+function showHome() {
+  hideYouGlish();
+  currentWord = null;
+  const home = $('homeView');
+  const study = $('studyPanel');
+  if (home) home.classList.remove('hidden');
+  if (study) study.classList.remove('active');
+  renderGrid();
+  updateStats();
+}
+
+function openStudy(w) {
+  currentWord = w;
+  const home = $('homeView');
+  const study = $('studyPanel');
+  if (home) home.classList.add('hidden');
+  if (study) study.classList.add('active');
+  if ($('studyEmoji')) $('studyEmoji').textContent = w.emoji || '📝';
+  if ($('studyTerm')) $('studyTerm').textContent = w.term;
+  if ($('studyPhonetic')) $('studyPhonetic').textContent = w.phonetic || '';
+  if ($('studyDef')) $('studyDef').textContent = w.definition;
+  if ($('studyEx')) $('studyEx').textContent = w.example ? '"' + w.example + '"' : '';
+  refreshVisual();
+  if ($('btnLearned')) $('btnLearned').textContent = isLearned(w) ? '✓ Learned' : '✓ Mark learned';
+  if ($('btnHard')) $('btnHard').textContent = isHard(w) ? '🔥 Hard' : '🔥 Mark hard';
+  hideYouGlish();
+  qsa('#studyTabs .tab').forEach(t => t.classList.remove('active'));
+  qsa('.tab-pane').forEach(p => p.classList.remove('active'));
+  const mcTab = qs('#studyTabs .tab[data-tab="mc"]');
+  if (mcTab) mcTab.classList.add('active');
+  if ($('pane-mc')) $('pane-mc').classList.add('active');
+  setupMC();
+  setupSpell();
+  setupSent();
+  window.scrollTo(0, 0);
+}
+
+function refreshVisual() {
+  if (!currentWord) return;
+  const vis = $('studyVisual');
+  const em = $('studyEmoji');
+  if (!vis) return;
+  if (currentWord.image) {
+    vis.innerHTML = '<img src="' + currentWord.image + '" alt="">';
+    if (em) em.style.display = 'none';
+  } else {
+    vis.innerHTML = '';
+    if (em) {
+      em.style.display = '';
+      em.textContent = currentWord.emoji || '📝';
+    }
+  }
+}
+
+function setupMC() {
+  const w = currentWord;
+  if (!w) return;
+  const reverse = Math.random() > 0.5;
+  const answer = reverse ? w.term : w.definition;
+  if ($('mcPrompt')) {
+    $('mcPrompt').textContent = reverse
+      ? 'Which phrase matches this meaning?'
+      : 'What does this phrase mean?';
+    if (reverse) $('mcPrompt').innerHTML += '<br><strong style="display:block;margin-top:6px">' + escapeHtml(w.definition) + '</strong>';
+    else $('mcPrompt').innerHTML += '<br><strong style="display:block;margin-top:6px">' + escapeHtml(w.term) + '</strong>';
+  }
+  const pool = words.filter(x => x.term !== w.term);
+  shuffle(pool);
+  const opts = [answer];
+  while (opts.length < 4 && pool.length) {
+    const o = reverse ? pool.pop().term : pool.pop().definition;
+    if (!opts.includes(o)) opts.push(o);
+  }
+  shuffle(opts);
+  const box = $('mcOptions');
+  if (!box) return;
+  box.innerHTML = '';
+  if ($('mcFeedback')) $('mcFeedback').className = 'feedback';
+  opts.forEach(o => {
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'mc-opt';
+    b.textContent = o;
+    b.addEventListener('click', () => {
+      qsa('.mc-opt', box).forEach(x => { x.style.pointerEvents = 'none'; });
+      if (o === answer) {
+        b.classList.add('correct');
+        if ($('mcFeedback')) { $('mcFeedback').textContent = 'Correct!'; $('mcFeedback').className = 'feedback show ok'; }
+        addPoints(5); bumpDaily();
+      } else {
+        b.classList.add('wrong');
+        qsa('.mc-opt', box).forEach(x => { if (x.textContent === answer) x.classList.add('correct'); });
+        if ($('mcFeedback')) {
+          $('mcFeedback').textContent = 'Answer: ' + answer;
+          $('mcFeedback').className = 'feedback show bad';
+        }
+      }
+    });
+    box.appendChild(b);
+  });
+}
+
+function setupSpell() {
+  if ($('spellInput')) $('spellInput').value = '';
+  if ($('spellFeedback')) $('spellFeedback').className = 'feedback';
+  if ($('spellDefBox') && currentWord) $('spellDefBox').textContent = currentWord.definition || '';
+}
+
+function setupSent() {
+  if (!currentWord) return;
+  if ($('sentPrompt')) {
+    $('sentPrompt').textContent = 'Write a sentence that includes: "' + currentWord.term + '". Meaning: ' + currentWord.definition;
+  }
+  if ($('sentInput')) $('sentInput').value = '';
+  if ($('sentFeedback')) $('sentFeedback').className = 'feedback';
+}
+
+/* ---------- Modal ---------- */
+function openModal(html) {
+  const body = $('modalBody');
+  if (body) body.innerHTML = html;
+  const modal = $('modal');
+  if (modal) modal.classList.add('open');
+}
+function closeModal() {
+  const modal = $('modal');
+  if (modal) modal.classList.remove('open');
+  const body = $('modalBody');
+  if (body) body.innerHTML = '';
+}
+
+/* ---------- Practice modes ---------- */
+function startMatch() {
+  const pairs = shuffle(words.slice()).slice(0, Math.min(6, words.length));
+  const terms = pairs.map(w => ({ type: 't', text: w.term, id: w.term }));
+  const defs = pairs.map(w => ({ type: 'd', text: w.definition, id: w.term }));
+  const tiles = shuffle(terms.concat(defs));
+  let selected = null;
+  let matched = 0;
+
+  function render() {
+    openModal(
+      '<div class="modal-title">🔗 Match</div>' +
+      '<div class="score-bar"><span>Matched: <strong id="mScore">' + matched + '</strong> / ' + pairs.length + '</span></div>' +
+      '<div class="match-board" id="matchBoard"></div>'
+    );
+    const board = $('matchBoard');
+    if (!board) return;
+    tiles.forEach((tile, i) => {
+      const b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'match-tile' + (tile.matched ? ' matched' : '') + (selected === i ? ' selected' : '');
+      b.textContent = tile.text.length > 70 ? tile.text.slice(0, 68) + '…' : tile.text;
+      if (!tile.matched) {
+        b.onclick = () => {
+          if (selected === null) { selected = i; render(); }
+          else if (selected === i) { selected = null; render(); }
+          else {
+            const a = tiles[selected];
+            const c = tiles[i];
+            if (a.id === c.id && a.type !== c.type) {
+              a.matched = c.matched = true;
+              matched++;
+              selected = null;
+              addPoints(8); bumpDaily();
+              render();
+              if (matched === pairs.length) {
+                setTimeout(() => {
+                  const body = $('modalBody');
+                  if (body) body.innerHTML += '<div class="feedback show ok" style="margin-top:12px">All matched!</div>';
+                }, 200);
+              }
+            } else {
+              const elA = board.children[selected];
+              const elB = board.children[i];
+              if (elA) elA.classList.add('wrong');
+              if (elB) elB.classList.add('wrong');
+              setTimeout(() => { selected = null; render(); }, 450);
+            }
+          }
+        };
+      }
+      board.appendChild(b);
+    });
+  }
+  render();
+}
+
+function startGaps() {
+  const list = shuffle(words.slice());
+  let idx = 0, score = 0;
+
+  function render() {
+    if (idx >= list.length) {
+      openModal(
+        '<div class="modal-title">📝 Gaps complete</div>' +
+        '<div class="empty-state"><strong>' + score + '</strong> / ' + list.length + ' correct</div>' +
+        '<button type="button" class="btn btn-primary btn-block" id="gapsAgain">Again</button>'
+      );
+      const again = $('gapsAgain');
+      if (again) again.onclick = () => startGaps();
+      return;
+    }
+    const w = list[idx];
+    const blanked = blankExample(w.example || '', w.term);
+    const blankHtml = escapeHtml(blanked).replace(/________/g, '<span class="gap-blank">?</span>');
+    openModal(
+      '<div class="modal-title">📝 Fill the gap</div>' +
+      '<div class="score-bar"><span>' + (idx+1) + ' / ' + list.length + '</span><span>Score: <strong>' + score + '</strong></span></div>' +
+      '<div class="gap-sentence">' + blankHtml + '</div>' +
+      '<div class="note-text" style="margin-bottom:8px">Meaning: ' + escapeHtml(w.definition) + '</div>' +
+      '<input class="spell-input" id="gapInput" placeholder="Type the missing phrase…" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">' +
+      '<div class="prac-actions">' +
+        '<button type="button" class="btn btn-sm" id="gapHear">🔊</button>' +
+        '<button type="button" class="btn btn-sm" id="gapHint">Hint</button>' +
+        '<button type="button" class="btn btn-primary btn-sm" id="gapCheck">Check</button>' +
+        '<button type="button" class="btn btn-sm" id="gapSkip">Skip</button>' +
+      '</div>' +
+      '<div class="feedback" id="gapFb"></div>'
+    );
+    const inp = $('gapInput');
+    if (inp) setTimeout(() => inp.focus(), 80);
+    const hear = $('gapHear');
+    if (hear) hear.onclick = () => speak(w.term);
+    const hint = $('gapHint');
+    if (hint) hint.onclick = () => {
+      const t = w.term;
+      const h = t.split('').map((c,i) => (i % 3 === 0 || c === ' ') ? c : '·').join('');
+      const fb = $('gapFb');
+      if (fb) { fb.textContent = 'Hint: ' + h; fb.className = 'feedback show'; }
+    };
+    const skip = $('gapSkip');
+    if (skip) skip.onclick = () => { idx++; render(); };
+    const check = $('gapCheck');
+    if (check) check.onclick = () => {
+      const val = (inp && inp.value || '').trim();
+      const ok = val.toLowerCase().replace(/\s+/g,' ') === w.term.toLowerCase().replace(/\s+/g,' ');
+      const fb = $('gapFb');
+      if (ok) {
+        score++; addPoints(6); bumpDaily();
+        if (fb) { fb.textContent = 'Correct!'; fb.className = 'feedback show ok'; }
+      } else {
+        if (fb) { fb.textContent = 'Answer: ' + w.term; fb.className = 'feedback show bad'; }
+      }
+      setTimeout(() => { idx++; render(); }, 1000);
+    };
+  }
+  render();
+}
+
+function startOrder() {
+  const list = shuffle(words.filter(w => w.example && tokenizeSentence(w.example).length >= 3));
+  if (!list.length) {
+    openModal('<div class="modal-title">No sentences</div><p class="note-text">Need examples with 3+ words.</p>');
+    return;
+  }
+  let idx = 0, score = 0;
+  let bankItems = [], pickedIds = [];
+
+  function paint() {
+    const bank = $('soBank');
+    const built = $('soBuilt');
+    if (!bank || !built) return;
+    bank.innerHTML = '';
+    built.innerHTML = '';
+    bankItems.forEach(item => {
+      const chip = document.createElement('button');
+      chip.type = 'button';
+      chip.className = 'order-chip' + (item.used ? ' used' : '');
+      chip.textContent = item.text;
+      if (!item.used) {
+        chip.onclick = () => { item.used = true; pickedIds.push(item.id); paint(); };
+      }
+      bank.appendChild(chip);
+    });
+    if (!pickedIds.length) {
+      built.innerHTML = '<span style="color:var(--muted);font-size:13px;padding:8px">Tap words to build the sentence…</span>';
+    } else {
+      pickedIds.forEach((id, pi) => {
+        const item = bankItems.find(x => x.id === id);
+        if (!item) return;
+        const chip = document.createElement('button');
+        chip.type = 'button';
+        chip.className = 'order-chip in-built';
+        chip.textContent = item.text;
+        chip.onclick = () => { item.used = false; pickedIds.splice(pi, 1); paint(); };
+        built.appendChild(chip);
+      });
+    }
+  }
+
+  function render() {
+    if (idx >= list.length) {
+      openModal(
+        '<div class="modal-title">🔀 Order complete</div>' +
+        '<div class="empty-state"><strong>' + score + '</strong> / ' + list.length + '</div>' +
+        '<button type="button" class="btn btn-primary btn-block" id="ordAgain">Again</button>'
+      );
+      const again = $('ordAgain');
+      if (again) again.onclick = () => startOrder();
+      return;
+    }
+    const w = list[idx];
+    const tokens = tokenizeSentence(w.example);
+    bankItems = tokens.map((text, i) => ({ id: i + '-' + text, text: text, used: false }));
+    shuffle(bankItems);
+    pickedIds = [];
+    openModal(
+      '<div class="modal-title">🔀 Sentence order</div>' +
+      '<div class="score-bar"><span>' + (idx+1) + ' / ' + list.length + '</span><span>Score: <strong>' + score + '</strong></span></div>' +
+      '<div class="prompt-box">Rebuild the example for <strong>' + escapeHtml(w.term) + '</strong></div>' +
+      '<div class="note-text" style="margin-bottom:8px">' + escapeHtml(w.definition) + '</div>' +
+      '<div class="order-built" id="soBuilt"></div>' +
+      '<div class="order-bank" id="soBank"></div>' +
+      '<div class="prac-actions">' +
+        '<button type="button" class="btn btn-sm" id="soClear">Clear</button>' +
+        '<button type="button" class="btn btn-sm" id="soHear">🔊</button>' +
+        '<button type="button" class="btn btn-primary btn-sm" id="soCheck">Check</button>' +
+        '<button type="button" class="btn btn-sm" id="soSkip">Skip</button>' +
+      '</div>' +
+      '<div class="feedback" id="soFb"></div>'
+    );
+    paint();
+    const clr = $('soClear');
+    if (clr) clr.onclick = () => {
+      bankItems.forEach(i => { i.used = false; });
+      pickedIds = [];
+      const fb = $('soFb');
+      if (fb) fb.className = 'feedback';
+      paint();
+    };
+    const hear = $('soHear');
+    if (hear) hear.onclick = () => speak(w.example || w.term);
+    const skip = $('soSkip');
+    if (skip) skip.onclick = () => { idx++; render(); };
+    const check = $('soCheck');
+    if (check) check.onclick = () => {
+      const got = pickedIds.map(id => {
+        const item = bankItems.find(x => x.id === id);
+        return item ? item.text : '';
+      }).join(' ');
+      const target = tokens.join(' ');
+      const norm = s => s.toLowerCase().replace(/[^\w\s']/g, '').replace(/\s+/g, ' ').trim();
+      const fb = $('soFb');
+      if (norm(got) === norm(target)) {
+        score++; addPoints(8); bumpDaily();
+        if (fb) { fb.textContent = 'Correct!'; fb.className = 'feedback show ok'; }
+      } else {
+        if (fb) { fb.textContent = 'Answer: ' + w.example; fb.className = 'feedback show bad'; }
+      }
+      setTimeout(() => { idx++; render(); }, 1100);
+    };
+  }
+  render();
+}
+
+function startHangman() {
+  const list = shuffle(words.slice());
+  let idx = 0, score = 0;
+
+  function render() {
+    if (idx >= list.length) {
+      openModal(
+        '<div class="modal-title">🎯 Hangman complete</div>' +
+        '<div class="empty-state"><strong>' + score + '</strong> / ' + list.length + '</div>' +
+        '<button type="button" class="btn btn-primary btn-block" id="hmAgain">Again</button>'
+      );
+      const again = $('hmAgain');
+      if (again) again.onclick = () => startHangman();
+      return;
+    }
+    const w = list[idx];
+    const phrase = w.term.toLowerCase();
+    const letters = 'abcdefghijklmnopqrstuvwxyz'.split('');
+    const guessed = {};
+    let lives = 7;
+    let won = false;
+    let lost = false;
+
+    function displayWord() {
+      return phrase.split('').map(ch => {
+        if (ch === ' ' || ch === '/' || ch === '-') return '<span class="hm-letter space">' + (ch === ' ' ? '' : ch) + '</span>';
+        if (guessed[ch]) return '<span class="hm-letter">' + ch + '</span>';
+        return '<span class="hm-letter">&nbsp;</span>';
+      }).join('');
+    }
+
+    function allRevealed() {
+      return phrase.split('').every(ch => {
+        if (ch === ' ' || ch === '/' || ch === '-') return true;
+        return !!guessed[ch];
+      });
+    }
+
+    function paint() {
+      const keysHtml = letters.map(L => {
+        const used = !!guessed[L];
+        let cls = 'hm-key' + (used ? ' used' : '');
+        if (used && phrase.indexOf(L) >= 0) cls += ' good';
+        else if (used) cls += ' bad';
+        return '<button type="button" class="' + cls + '" data-l="' + L + '">' + L.toUpperCase() + '</button>';
+      }).join('');
+      openModal(
+        '<div class="modal-title">🎯 Hangman</div>' +
+        '<div class="score-bar"><span>' + (idx+1) + ' / ' + list.length + '</span><span>Score: <strong>' + score + '</strong></span></div>' +
+        '<div class="prompt-box">Guess the phrase · Meaning: <em>' + escapeHtml(w.definition) + '</em></div>' +
+        '<div class="hm-status">Lives: ' + lives + (won ? ' · You got it!' : '') + (lost ? ' · Out of lives' : '') + '</div>' +
+        '<div class="hm-word" id="hmWord">' + displayWord() + '</div>' +
+        '<div class="hm-keys" id="hmKeys">' + keysHtml + '</div>' +
+        '<div class="prac-actions" style="margin-top:12px">' +
+          (won || lost ? '<button type="button" class="btn btn-primary btn-block" id="hmNext">Next</button>' : '') +
+          '<button type="button" class="btn btn-sm" id="hmSkip">Skip</button>' +
+        '</div>' +
+        (lost ? '<div class="feedback show bad">Answer: ' + escapeHtml(w.term) + '</div>' : '') +
+        (won ? '<div class="feedback show ok">Well done!</div>' : '')
+      );
+      qsa('#hmKeys .hm-key').forEach(btn => {
+        btn.onclick = () => {
+          if (won || lost) return;
+          const L = btn.dataset.l;
+          if (guessed[L]) return;
+          guessed[L] = true;
+          if (phrase.indexOf(L) < 0) lives--;
+          if (allRevealed()) {
+            won = true;
+            score++;
+            addPoints(8);
+            bumpDaily();
+          } else if (lives <= 0) {
+            lost = true;
+          }
+          paint();
+        };
+      });
+      const next = $('hmNext');
+      if (next) next.onclick = () => { idx++; render(); };
+      const skip = $('hmSkip');
+      if (skip) skip.onclick = () => { idx++; render(); };
+    }
+    paint();
+  }
+  render();
+}
+
+function startQuiz() {
+  const list = shuffle(words.slice());
+  let idx = 0, score = 0;
+
+  function render() {
+    if (idx >= list.length) {
+      openModal(
+        '<div class="modal-title">❓ Quiz complete</div>' +
+        '<div class="empty-state"><strong>' + score + '</strong> / ' + list.length + '</div>' +
+        '<button type="button" class="btn btn-primary btn-block" id="qzAgain">Again</button>'
+      );
+      const again = $('qzAgain');
+      if (again) again.onclick = () => startQuiz();
+      return;
+    }
+    const w = list[idx];
+    const reverse = Math.random() > 0.45;
+    const answer = reverse ? w.term : w.definition;
+    const promptText = reverse ? w.definition : w.term;
+    const pool = words.filter(x => x.term !== w.term);
+    shuffle(pool);
+    const opts = [answer];
+    while (opts.length < 4 && pool.length) {
+      const o = reverse ? pool.pop().term : pool.pop().definition;
+      if (!opts.includes(o)) opts.push(o);
+    }
+    shuffle(opts);
+    openModal(
+      '<div class="modal-title">❓ Quiz</div>' +
+      '<div class="score-bar"><span>' + (idx+1) + ' / ' + list.length + '</span><span>Score: <strong>' + score + '</strong></span></div>' +
+      '<div class="prompt-box">' + (reverse ? 'Which phrase?' : 'What does it mean?') +
+        '<br><strong style="display:block;margin-top:8px;font-size:1rem">' + escapeHtml(promptText) + '</strong></div>' +
+      '<div class="mc-options" id="qzOpts"></div>' +
+      '<div class="feedback" id="qzFb"></div>'
+    );
+    const box = $('qzOpts');
+    if (!box) return;
+    opts.forEach(o => {
+      const b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'mc-opt';
+      b.textContent = o;
+      b.onclick = () => {
+        qsa('.mc-opt', box).forEach(x => { x.style.pointerEvents = 'none'; });
+        if (o === answer) {
+          b.classList.add('correct');
+          score++; addPoints(5); bumpDaily();
+          if ($('qzFb')) { $('qzFb').textContent = 'Correct!'; $('qzFb').className = 'feedback show ok'; }
+        } else {
+          b.classList.add('wrong');
+          qsa('.mc-opt', box).forEach(x => { if (x.textContent === answer) x.classList.add('correct'); });
+          if ($('qzFb')) { $('qzFb').textContent = 'Answer: ' + answer; $('qzFb').className = 'feedback show bad'; }
+        }
+        setTimeout(() => { idx++; render(); }, 900);
+      };
+      box.appendChild(b);
+    });
+  }
+  render();
+}
+
+function startWrite() {
+  const list = words.slice();
+  let idx = 0, done = 0;
+
+  function render() {
+    if (idx >= list.length) {
+      openModal(
+        '<div class="modal-title">✍️ Write complete</div>' +
+        '<div class="empty-state"><strong>' + done + '</strong> / ' + list.length + ' used the phrase</div>'
+      );
+      return;
+    }
+    const w = list[idx];
+    openModal(
+      '<div class="modal-title">✍️ Write a sentence</div>' +
+      '<div class="score-bar"><span>' + (idx+1) + ' / ' + list.length + '</span></div>' +
+      '<div class="prompt-box"><strong>' + escapeHtml(w.term) + '</strong><br>' + escapeHtml(w.definition) + '</div>' +
+      '<textarea class="sentence-input" id="wrInput" placeholder="Write your own sentence using the phrase…"></textarea>' +
+      '<button type="button" class="btn btn-primary btn-block" id="wrCheck">Check phrase used</button>' +
+      '<div class="feedback" id="wrFb"></div>' +
+      '<button type="button" class="btn btn-block" id="wrSkip" style="margin-top:8px">Skip</button>'
+    );
+    const check = $('wrCheck');
+    if (check) check.onclick = () => {
+      const val = ($('wrInput') && $('wrInput').value) || '';
+      const fb = $('wrFb');
+      if (phraseUsed(val, w.term)) {
+        done++; addPoints(8); bumpDaily();
+        if (fb) { fb.textContent = 'Phrase found — great!'; fb.className = 'feedback show ok'; }
+        setTimeout(() => { idx++; render(); }, 800);
+      } else {
+        if (fb) {
+          fb.innerHTML = 'Could not find the whole phrase.<br><span class="note-text">Model: ' + escapeHtml(w.example || '') + '</span>';
+          fb.className = 'feedback show bad';
+        }
+      }
+    };
+    const skip = $('wrSkip');
+    if (skip) skip.onclick = () => { idx++; render(); };
+  }
+  render();
+}
+
+function startSpeak() {
+  const list = words.slice();
+  let idx = 0, done = 0;
+
+  function render() {
+    if (idx >= list.length) {
+      openModal(
+        '<div class="modal-title">🎙️ Speak complete</div>' +
+        '<div class="empty-state"><strong>' + done + '</strong> / ' + list.length + '</div>' +
+        '<p class="note-text" style="text-align:center">Speech works best in Chrome over HTTPS.</p>'
+      );
+      return;
+    }
+    const w = list[idx];
+    openModal(
+      '<div class="modal-title">🎙️ Speak</div>' +
+      '<div class="score-bar"><span>' + (idx+1) + ' / ' + list.length + '</span></div>' +
+      '<div class="prompt-box"><strong>' + escapeHtml(w.term) + '</strong><br>' + escapeHtml(w.definition) +
+        '<br><span class="note-text">Say a sentence that uses this phrase.</span></div>' +
+      '<button type="button" class="btn btn-primary btn-block" id="spMic">🎤 Speak</button>' +
+      '<div class="rec-status" id="spStatus"></div>' +
+      '<div class="feedback" id="spFb"></div>' +
+      '<button type="button" class="btn btn-block" id="spSkip" style="margin-top:8px">Skip</button>' +
+      '<p class="note-text">Chrome works best. Allow the microphone when asked.</p>'
+    );
+    const mic = $('spMic');
+    if (mic) mic.onclick = () => {
+      startListen(
+        (transcript) => {
+          const fb = $('spFb');
+          if (phraseUsed(transcript, w.term)) {
+            done++; addPoints(10); bumpDaily();
+            if (fb) { fb.textContent = 'Phrase detected — well done!'; fb.className = 'feedback show ok'; }
+            setTimeout(() => { idx++; render(); }, 900);
+          } else {
+            if (fb) {
+              fb.textContent = 'Phrase not clearly found. Heard: "' + transcript + '"';
+              fb.className = 'feedback show bad';
+            }
+          }
+        },
+        () => {},
+        $('spStatus')
+      );
+    };
+    const skip = $('spSkip');
+    if (skip) skip.onclick = () => { idx++; render(); };
+  }
+  render();
+}
+
+function startReview() {
+  let due = getDueWords();
+  if (!due.length) {
+    due = words.filter(isHard);
+    if (!due.length) due = shuffle(words.slice()).slice(0, Math.min(5, words.length));
+  } else {
+    due = shuffle(due);
+  }
+  let idx = 0;
+  let showMeaning = false;
+
+  function render() {
+    if (idx >= due.length) {
+      openModal('<div class="modal-title">📅 Review complete</div><div class="empty-state">Nice work!</div>');
+      updateStats();
+      return;
+    }
+    const w = due[idx];
+    openModal(
+      '<div class="modal-title">📅 Review</div>' +
+      '<div class="score-bar"><span>' + (idx+1) + ' / ' + due.length + '</span></div>' +
+      '<div style="text-align:center;font-size:2rem;margin:8px 0">' + (w.emoji || '') + '</div>' +
+      '<div class="study-term" style="text-align:center">' + escapeHtml(w.term) + '</div>' +
+      (w.phonetic ? '<div class="study-phonetic" style="text-align:center">' + escapeHtml(w.phonetic) + '</div>' : '') +
+      (showMeaning
+        ? '<div class="def-box" style="margin-top:12px">' + escapeHtml(w.definition) + '</div>' +
+          '<div class="ex-box">' + escapeHtml(w.example || '') + '</div>'
+        : '') +
+      '<div class="prac-actions" style="justify-content:center;margin-top:12px">' +
+        '<button type="button" class="btn" id="rvHear">🔊</button>' +
+        '<button type="button" class="btn" id="rvMeaning">' + (showMeaning ? 'Hide meaning' : 'See meaning') + '</button>' +
+      '</div>' +
+      '<div class="srs-grades">' +
+        '<button type="button" class="btn btn-hard" id="rvHard">Hard</button>' +
+        '<button type="button" class="btn btn-medium" id="rvMed">Medium</button>' +
+        '<button type="button" class="btn btn-easy" id="rvEasy">Easy</button>' +
+      '</div>'
+    );
+    const hear = $('rvHear');
+    if (hear) hear.onclick = () => speak(w.term);
+    const meaning = $('rvMeaning');
+    if (meaning) meaning.onclick = () => { showMeaning = !showMeaning; render(); };
+    const hard = $('rvHard');
+    if (hard) hard.onclick = () => { gradeSRS(w, 0); showMeaning = false; idx++; render(); };
+    const med = $('rvMed');
+    if (med) med.onclick = () => { gradeSRS(w, 1); showMeaning = false; idx++; bumpDaily(); addPoints(3); render(); };
+    const easy = $('rvEasy');
+    if (easy) easy.onclick = () => { gradeSRS(w, 2); showMeaning = false; idx++; bumpDaily(); addPoints(5); render(); };
+  }
+  render();
+}
+
+function showProgress() {
+  const learnedN = words.filter(isLearned).length;
+  const hardN = words.filter(isHard).length;
+  let html =
+    '<div class="modal-title">📊 Progress</div>' +
+    '<div class="stats-row" style="margin-bottom:12px">' +
+      '<div class="stat-card"><div class="num">' + learnedN + '</div><div class="lbl">Learned</div></div>' +
+      '<div class="stat-card"><div class="num">' + hardN + '</div><div class="lbl">Hard</div></div>' +
+      '<div class="stat-card"><div class="num">' + state.points + '</div><div class="lbl">Points</div></div>' +
+    '</div>';
+  words.forEach(w => {
+    const s = ensureSRS(w);
+    let tag = 'New';
+    if (isLearned(w)) tag = 'Learned';
+    else if (isHard(w)) tag = 'Hard';
+    else if (s.repetitions) tag = 'Learning';
+    html += '<div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);font-size:0.85rem">' +
+      '<span>' + escapeHtml(w.term) + '</span><span style="color:var(--muted)">' + tag + '</span></div>';
+  });
+  openModal(html);
+}
+
+function openAddWord() {
+  openModal(
+    '<div class="modal-title">+ Add word</div>' +
+    '<div class="add-form" id="addForm">' +
+      '<label>Term *</label><input id="avTerm" placeholder="e.g. sort of" autocomplete="off">' +
+      '<label>Definition *</label><textarea id="avDef" placeholder="Meaning…"></textarea>' +
+      '<label>Example</label><textarea id="avEx" placeholder="Example sentence…"></textarea>' +
+      '<label>Phonetic</label><input id="avPhon" placeholder="/sɔːt əv/">' +
+      '<label>Emoji</label><input id="avEmoji" placeholder="📝" maxlength="4">' +
+      '<div class="err" id="avErr"></div>' +
+      '<button type="button" class="btn btn-primary btn-block" id="avSave" style="margin-top:12px">Save word</button>' +
+      '<button type="button" class="btn btn-block" id="avCancel" style="margin-top:6px">Cancel</button>' +
+    '</div>'
+  );
+  setTimeout(() => {
+    const save = $('avSave');
+    const cancel = $('avCancel');
+    if (cancel) cancel.onclick = closeModal;
+    if (save) save.onclick = () => {
+      const term = (($('avTerm') && $('avTerm').value) || '').trim();
+      const definition = (($('avDef') && $('avDef').value) || '').trim();
+      const example = (($('avEx') && $('avEx').value) || '').trim();
+      const phonetic = (($('avPhon') && $('avPhon').value) || '').trim();
+      const emoji = (($('avEmoji') && $('avEmoji').value) || '📝').trim() || '📝';
+      const err = $('avErr');
+      if (!term || !definition) {
+        if (err) { err.textContent = 'Term and definition are required.'; err.classList.add('show'); }
+        return;
+      }
+      if (words.some(w => w.term.toLowerCase() === term.toLowerCase())) {
+        if (err) { err.textContent = 'That term already exists.'; err.classList.add('show'); }
+        return;
+      }
+      const item = {
+        term, definition, example, phonetic, emoji,
+        image: '', imgQuery: term, custom: true
+      };
+      words.push(item);
+      saveCustom();
+      ensureSRS(item);
+      closeModal();
+      renderGrid();
+      updateStats();
+      openStudy(item);
+    };
+    const t = $('avTerm');
+    if (t) t.focus();
+  }, 0);
+}
+
+/* ---------- Wire ---------- */
+function safeOn(id, fn) {
+  const el = $(id);
+  if (el) el.addEventListener('click', fn);
+}
+
+function wire() {
+  // Practice buttons
+  qsa('.prac-btn, .use-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const mode = btn.dataset.mode;
+      if (mode === 'match') startMatch();
+      else if (mode === 'gaps') startGaps();
+      else if (mode === 'order') startOrder();
+      else if (mode === 'quiz') startQuiz();
+      else if (mode === 'hangman') startHangman();
+      else if (mode === 'review') startReview();
+      else if (mode === 'write') startWrite();
+      else if (mode === 'speak') startSpeak();
+    });
+  });
+
+  safeOn('dueBtn', () => startReview());
+  safeOn('btnAddWord', () => openAddWord());
+  safeOn('btnProgress', () => showProgress());
+  safeOn('btnBack', () => showHome());
+
+  safeOn('btnHear', () => { if (currentWord) speak(currentWord.term); });
+  safeOn('btnYouglish', () => {
+    if (!currentWord) return;
+    const box = $('youglishBox');
+    if (box && box.classList.contains('visible')) { hideYouGlish(); return; }
+    loadYouGlish(currentWord.term);
+  });
+  safeOn('btnYgReload', () => { if (currentWord) loadYouGlish(currentWord.term); });
+
+  safeOn('btnLearned', () => {
+    if (!currentWord) return;
+    const k = termKey(currentWord);
+    state.learned[k] = !state.learned[k];
+    if (state.learned[k]) {
+      const s = ensureSRS(currentWord);
+      if (!s.nextReview) {
+        s.repetitions = Math.max(s.repetitions, 1);
+        s.interval = 1;
+        s.nextReview = Date.now() + 24*60*60*1000;
+      }
+      addPoints(10); bumpDaily();
+    }
+    saveState();
+    if ($('btnLearned')) $('btnLearned').textContent = isLearned(currentWord) ? '✓ Learned' : '✓ Mark learned';
+    updateStats();
+  });
+  safeOn('btnHard', () => {
+    if (!currentWord) return;
+    const k = termKey(currentWord);
+    state.hard[k] = !state.hard[k];
+    saveState();
+    if ($('btnHard')) $('btnHard').textContent = isHard(currentWord) ? '🔥 Hard' : '🔥 Mark hard';
+    updateStats();
+  });
+
+  // Image tools
+  safeOn('btnImgUpload', () => {
+    const inp = $('imgFileInput');
+    if (inp) inp.click();
+  });
+  const imgInp = $('imgFileInput');
+  if (imgInp) {
+    imgInp.addEventListener('change', () => {
+      const file = imgInp.files && imgInp.files[0];
+      if (!file || !currentWord) return;
+      if (file.size > 2500000) {
+        alert('Image too large (max ~2.5MB). Try a smaller picture.');
+        imgInp.value = '';
+        return;
+      }
+      const reader = new FileReader();
+      reader.onload = () => { setWordImage(currentWord, reader.result); imgInp.value = ''; };
+      reader.onerror = () => alert('Could not read that file.');
+      reader.readAsDataURL(file);
+    });
+  }
+  safeOn('btnImgSearch', () => {
+    if (!currentWord) return;
+    const q = encodeURIComponent(currentWord.imgQuery || currentWord.term);
+    window.open('https://www.google.com/search?tbm=isch&q=' + q, '_blank', 'noopener');
+  });
+  safeOn('btnImgPaste', () => {
+    if (!currentWord) return;
+    const url = prompt('Paste an image URL (https://…)');
+    if (!url) return;
+    const u = url.trim();
+    if (!/^https?:\/\//i.test(u)) { alert('Please enter a full https:// URL.'); return; }
+    setWordImage(currentWord, u);
+  });
+  safeOn('btnImgRemove', () => {
+    if (!currentWord) return;
+    if (!confirm('Remove the picture for this term?')) return;
+    setWordImage(currentWord, null);
+  });
+
+  // Study tabs
+  qsa('#studyTabs .tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      qsa('#studyTabs .tab').forEach(t => t.classList.remove('active'));
+      qsa('.tab-pane').forEach(p => p.classList.remove('active'));
+      tab.classList.add('active');
+      const pane = $('pane-' + tab.dataset.tab);
+      if (pane) pane.classList.add('active');
+      if (tab.dataset.tab === 'mc') setupMC();
+      else if (tab.dataset.tab === 'spell') setupSpell();
+      else if (tab.dataset.tab === 'sent') setupSent();
+    });
+  });
+
+  safeOn('btnSpellHint', () => {
+    if (!currentWord) return;
+    const t = currentWord.term;
+    const hint = t.split('').map((c,i) => (i % 3 === 0 || c === ' ') ? c : '·').join('');
+    if ($('spellFeedback')) { $('spellFeedback').textContent = 'Hint: ' + hint; $('spellFeedback').className = 'feedback show'; }
+  });
+  safeOn('btnSpellHear', () => { if (currentWord) speak(currentWord.term); });
+  safeOn('btnSpellCheck', () => {
+    if (!currentWord) return;
+    const val = (($('spellInput') && $('spellInput').value) || '').trim();
+    const fb = $('spellFeedback');
+    if (!val) {
+      if (fb) { fb.textContent = 'Please type something first.'; fb.className = 'feedback show'; }
+      return;
+    }
+    const ok = val.toLowerCase().replace(/\s+/g,' ') === currentWord.term.toLowerCase().replace(/\s+/g,' ');
+    if (ok) {
+      if (fb) { fb.textContent = 'Perfect spelling!'; fb.className = 'feedback show ok'; }
+      addPoints(6); bumpDaily();
+    } else {
+      const dist = levenshtein(val.replace(/\s+/g,''), currentWord.term.replace(/\s+/g,''));
+      let msg = 'You wrote "' + val + '". ';
+      if (dist <= 2) msg += 'Very close. Answer: ' + currentWord.term;
+      else msg += 'Answer: ' + currentWord.term;
+      if (fb) { fb.textContent = msg; fb.className = 'feedback show bad'; }
+    }
+  });
+
+  safeOn('btnSentCheck', () => {
+    if (!currentWord) return;
+    const val = (($('sentInput') && $('sentInput').value) || '');
+    const fb = $('sentFeedback');
+    if (phraseUsed(val, currentWord.term)) {
+      if (fb) { fb.textContent = 'Phrase found — nice sentence!'; fb.className = 'feedback show ok'; }
+      addPoints(8); bumpDaily();
+    } else {
+      if (fb) {
+        fb.innerHTML = 'Could not find the whole phrase.<br><span class="note-text">Model: ' + escapeHtml(currentWord.example || '') + '</span>';
+        fb.className = 'feedback show bad';
+      }
+    }
+  });
+
+  // Modal close
+  const modal = $('modal');
+  if (modal) {
+    modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
+  }
+  safeOn('modalCloseBtn', () => closeModal());
+}
+
+function init() {
+  loadState();
+  loadWords();
+  wire();
+  renderGrid();
+  updateStats();
+  showHome();
+}
+
+init();
+</script>
+<script async src="https://youglish.com/public/emb/widget.js" charset="utf-8"></script>
+</body>
+</html>
